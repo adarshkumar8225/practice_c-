@@ -18,10 +18,10 @@ class Rectangle{
 
 };
 
-class RectangleArea : public Rectangle{
+class RectangleArea : public Rectangle{ //inheritance 
     public:
      void display(){
-         int area=width*height;
+         int area=width*height;// access the varioble of parent class
          cout<<area<<endl;
      }
 };
