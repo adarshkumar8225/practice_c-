@@ -1,11 +1,4 @@
-/******************************************************************************
 
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
-C#, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #include <iostream>
 #include<math.h>
 using namespace std;
@@ -16,7 +9,7 @@ int no_of_digit(int x)
     {
         x=x/10;
         n++;
-    }
+    } 
     return(n);
 }
 
@@ -35,12 +28,14 @@ int armstrong(int x)
     else return(0);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     int n,A;
-    cin>>n;
+    n=atoi(argv[1]);
+    //cin>>n;
     A=armstrong(n);
     if(A==0)cout<<"NO"<<endl;
     else cout<<" YES "<<endl;
     return 0;
 }
+
