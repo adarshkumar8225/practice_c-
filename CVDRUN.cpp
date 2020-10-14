@@ -1,36 +1,27 @@
+
+
 #include <iostream>
 #include<vector>
 using namespace std;
 
 int main() {
 	// your code goes here
-	int t,N,K,X,Y,p;
+	int t,N,K,X,Y;
 	cin>>t;
 	for(int i=0;i<t;i++)
 	{
-	    //cout<<"hello"<<endl;
 	    cin>>N>>K>>X>>Y;
-	    p=X;
-	    X=(X+K)%N;
-	    while(X!=p)
+	    int A[N]={0};//initialize to 0;
+	    while(A[X]!=1)// continue move in the circle till we reach already visited city.
 	    {
-	        if(X==Y)
-	        {
-	            cout<<"YES"<<endl;
-	            break;
-	        }
-	        else
-	        {
-	            //cout<<X<<endl;
-	            X=(X+K)%N;
-	        }
-	        
+	        A[X]=1;//the city visited its value will be set to 1.
+	        X=(X+K)%N;//jump to k step.
 	    }
-	    if(X==p)
-	    {
-	        cout<<"NO"<<endl;
-	    }
+        if(A[Y]==1)cout<<"YES"<<endl;//if destination is visited it will set to 1.
+        else cout<<"NO"<<endl;
 	}
-	//cout<<"Hi"<<endl;
 	return 0;
+}
+
+
 }
