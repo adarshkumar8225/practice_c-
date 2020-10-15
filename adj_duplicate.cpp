@@ -1,4 +1,4 @@
-    #include <iostream>
+#include <iostream>
 #include<bits/stdc++.h>
 #include<string>
 #include<vector>
@@ -7,8 +7,8 @@ using namespace std;
 //function to remove adjacent duplicates.
 void Remove_adjacent(string str)
 {
-    int i,j,n=str.size(),flag=1;
-    vector<int> v;//it stores the start and end index of all the adjacent duplicates.
+    int k,i,j,n=str.size(),flag=1;
+    vector<int> v;//it stores the start and end index of all the adjacent duplicates which need to be reoved.
     for(i=0,j=1;j<n;j++)
     {
         //if its the first different element after co0ntinuous duplicates.
@@ -26,7 +26,6 @@ void Remove_adjacent(string str)
         {
             i++;
             continue;
-            
         }
         //if duplicates set flag=0.
         if(str[i]==str[j])
@@ -38,32 +37,23 @@ void Remove_adjacent(string str)
     if(flag==0) str.erase(i,j-i);
     int m=v.size();
     //read from the vector and start erasing duplicates from end side.
-    for(int k=m-2,l=m-1;l>0;k-=2,l-=2)
+   //even index of vector keeps start index and odd index keeps end index which is to be removed.
+    for(int l=m-1;l>=1;l-=2)
         {
             //cout<<k<<"  "<<l-k<<endl;
-            str.erase(v[k],v[l]-v[k]);
+            str.erase(v[l-1],v[l]-v[l-1]);
         }
-    v.clear();//clear the vector.
-    flag=1;
-    //check if all the adjacent duplicates is removed or not.
-    for(int k=0;k<str.size()-1;k++)
-    {
-        if(str[k]==str[k+1]) {
-            flag=0;
-            break;
-        }
-    }
+    // size of vector 0 means no duplicates are present.
     //it implies no duplicates are present so just print str.
-    if(flag==1) {
+    if(v.size()==0) {
         cout<<str<<endl;
         return;
     }
     //else put recursive call.
     else {
         Remove_adjacent(str);
-        
     }
-    return;
+ 
 }
 
 
