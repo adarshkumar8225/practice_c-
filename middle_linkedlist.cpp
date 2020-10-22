@@ -3,21 +3,15 @@ int getMiddle(Node *head)
 {
    // Your code here
    if(head==NULL) return -1;
-   struct Node *Trav;
-   Trav=head;
-   int count=1,i;
-   //loop for counting the number of elements in the linked list...............
-   while(Trav->next!=NULL)
+   struct Node *Trav1,*Trav2;
+   Trav1=head;
+   Trav2=head;
+   while(Trav2!=NULL && Trav2->next!=NULL)
    {
-       count++;
-       Trav=Trav->next;   
+       Trav2=Trav2->next;
+       Trav2=Trav2->next;
+       Trav1=Trav1->next;
    }
-   Trav=head;
-   count=count/2+1;
-   //Reach to the middle element....................
-   for(i=0;i<count-1;i++)
-   {
-       Trav=Trav->next;
-   }
-   return(Trav->data);
+  // int d=Trav1->data;
+   return(Trav1->data);
 }
