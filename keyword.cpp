@@ -2,6 +2,8 @@
 #include<string>
 #include<math.h>
 using namespace std;
+//set of string which are keyword for this problem...................................
+
 string str1[]={"break","case","continue","default","defer","else","for","func","goto","if","map","range","return","struct","type","var"};
 
 int keyword(string str)
