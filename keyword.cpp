@@ -1,6 +1,5 @@
 #include <iostream>
 #include<string>
-#include<math.h>
 using namespace std;
 //set of string which are keyword for this problem...................................
 
