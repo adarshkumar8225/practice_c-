@@ -24,6 +24,7 @@ int main()
     if(x<-5 || x>5 || y<-5 || y>5) cout<<"\n Invalid starting point ";
     else
     {
+        srand(time(0));
         curr_val=function(x,y);
         while(1)
         {
@@ -62,7 +63,7 @@ int main()
             {
                 while(1)
                 {
-                    srand(time(0));
+                    
                     int k=(1+ rand()%4);// way to store random number as int 
                     //if random number has less value than current value
                     if(next_v[k-1]<curr_val)
