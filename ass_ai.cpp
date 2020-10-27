@@ -3,7 +3,7 @@
 #include<math.h>
 #include<time.h>
 using namespace std;
-
+//function to calculate value of expression for given x and y.
 float function(float x,float y)
 {
     float f;
@@ -15,8 +15,8 @@ float function(float x,float y)
 
 int main()
 {
-    float step_size,x,y,curr_val,next_val,x_old,y_old;
-    int flag0,flag1,flag2,flag3,count=0;
+    float step_size,x,y,curr_val,next_v[4];
+    int flag0,flag1,count=0;
     cout<<"Enter the step size between 0.25 to 1:";
     cin>>step_size;
     cout<<"\n Enter the starting point between -5 to 5 : ";
@@ -29,59 +29,63 @@ int main()
         {
             flag0=1;
             flag1=1;
-            flag2=1;
-            flag3=1;
-            while(flag0||flag1||flag2||flag3)
+            //compute all the values of four neighbour points if x and y lies in the range -5 to 5.
+            if(x-step_size>-5 && x-step_size<5)
+            next_v[0]=function(x-step_size,y);
+            else next_v[0]=curr_val;
+            if(x+step_size>-5 && x+step_size<5)
+            next_v[1]=function(x+step_size,y);
+            else next_v[0]=curr_val;
+            if(y-step_size>-5 && y-step_size<5)
+            next_v[3]=function(x,y-step_size);
+            else next_v[0]=curr_val;
+            if(y+step_size>-5 && y+step_size<5)
+            next_v[2]=function(x,y+step_size);
+            else next_v[0]=curr_val;
+                //check if any value is less than current value............
+            for(int j=0;j<4;j++)
             {
-                x_old=x;
-                y_old=y;
-                srand(time(0));
-                int k=(1+rand()%4);
-                switch(k)
-                {
-                    case 1: if(x-step_size>-5 && x-step_size<5 && flag0==1){ x=x-step_size;
-                            flag0=0;
-                            }
-                            break;
-                    case 2:if(x+step_size>-5 && x+step_size<5 && flag1==1){ 
-                            x=x+step_size;
-                            flag1=0;
-                           }
-                            break;
-                    case 3:if(y+step_size>-5 && y+step_size<5 && flag2==1){
-                           y=y+step_size;
-                           flag2=0;
-                           }
-                            break;
-                    case 4:if(y-step_size>-5 && y-step_size<5 && flag3==1){ 
-                        y=y-step_size;
-                        flag3=0;
-                       }
-                            break;
-                }
-                next_val=function(x,y);
-                if(next_val<curr_val) 
-                {
-                    count++;
-                    break;
-                }
-                else
-                {
-                    x=x_old;
-                    y=y_old;
-                }
-                
+                    
+                if(next_v[j]<curr_val) flag0=0;
+                else flag1=0;
+                    
             }
-            
-            if(flag0==0 && flag1==0 && flag2==0 && flag3==0 && next_val>=curr_val)
+           // if no value is less than current value just stop.
+            if(flag0==1)
             {
                 cout<<count<<endl;
                 cout<<curr_val<<endl;
                 break;
             }
-            
+            //else randomly select a neighbour with value less than current value
+            else
+            {
+                while(1)
+                {
+                    srand(time(0));
+                    int k=(1+rand()%4);
+                    //if random number has less value than current value
+                    if(next_v[k-1]<curr_val)
+                    {
+                        curr_val=next_v[k];//update current value
+                        //update x and y value.
+                        switch(k)
+                        {
+                            case 1: x=x-step_size;
+                                    break;
+                            case 2: x=x+step_size;
+                                    break;
+                            case 3: y=y+step_size;
+                                    break;
+                            case 4: y=y-step_size;
+                                    break;
+                        }
+                        count++;//increment count value to count the no. of points taken
+                        break;
+                    }
+                }
+            }
         }
-        
     }
-return 0;
+   return 0;
 }
