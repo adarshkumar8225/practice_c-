@@ -67,7 +67,7 @@ int main()
                     //if random number has less value than current value
                     if(next_v[k-1]<curr_val)
                     {
-                        curr_val=next_v[k];//update current value
+                        curr_val=next_v[k-1];//update current value
                         //update x and y value.
                         switch(k)
                         {
