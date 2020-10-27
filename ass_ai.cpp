@@ -63,7 +63,7 @@ int main()
                 while(1)
                 {
                     srand(time(0));
-                    int k=(1+rand()%4);
+                    int k=(1+ rand()%4);// way to store random number as int 
                     //if random number has less value than current value
                     if(next_v[k-1]<curr_val)
                     {
