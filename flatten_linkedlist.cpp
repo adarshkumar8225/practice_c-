@@ -6,6 +6,7 @@
 
 
 //function to merge two sorted linked list>>>>>>>>
+//sorted list merge
 Node *merge(Node *T1,Node *T2)
 {
     Node *temp,*tv=T1;
