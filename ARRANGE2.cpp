@@ -7,12 +7,13 @@
 using namespace std;
 
 // int count=1;
-vector <int> num;
+vector <long long int> num;
 
-int value(vector<int> v )
+long long int value(vector<int> v )
 {
     int i;
-    int sum=0,flag=0;
+   long long int sum=0;
+   int flag=0;
     for(i=0;i<v.size();i++)
     {
         sum=sum+pow(10,i)*v[i];
