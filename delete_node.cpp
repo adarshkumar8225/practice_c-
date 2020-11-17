@@ -1,5 +1,8 @@
 //delete node when reference to the node which is to be deleted is given
 
+// This function should delete node from linked list. The function
+// may assume that node exists in linked list and is not last node
+// node: reference to the node which is to be deleted
 void deleteNode(Node *node)
 {
    // Your code here
@@ -15,4 +18,6 @@ void deleteNode(Node *node)
    }
    trav1->data=trav2->data;
    trav1->next=NULL;
+   //free up the last node memory to avoid memory leak
+   delete(trav2);
 }
