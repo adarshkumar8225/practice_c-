@@ -1,47 +1,31 @@
 #include<iostream>
 #include<vector>
+#include<cstring>
 #include<bits/stdc++.h>
 
 using namespace std;
 //keep track which iron is already attracted by any magnet
 vector<int> v;
 
-int calculate_val(string str,int i,int j,int K)
-{
-    int l,s=0,sum;
-    for(l=i+1;l<j;l++)
-    {
-        if(str[l]==':') s=s+1;
-    }
-    sum=K+1-abs(i-j)-s;
-    if(sum>0) return 1;
-    else return 0;  
-}
-
-
 int value(string str,int i,int p,int j,int K)
 {
-    int x,z,q;
+    int x,z;
     for(x=max(i,v[v.size()-1]+1);x<=j;x++)
     {
         if(str[x]=='I')
         {
-            q=x;
-            if(x>p)
+           //whenever we get a sheet we have added one more sheet therefore no need to count the sheet
+           z=K+1-abs(x-p);
+            if(z>0)
             {
-                x^=p;
-                p^=x;
-                x^=p;
-            }
-            z=calculate_val(str,x,p,K);
-            if(z==1)
-            {
-                v.push_back(q);
+                v.push_back(x);
                 return 1;
             }
         }
     }
-    return 0;  
+
+    return 0;
+    
 }
 
 
@@ -60,7 +44,7 @@ int calculate(string str,int i,int j,int K)
         }
     }
     return count1;
- 
+   
 }
 
 
@@ -72,24 +56,29 @@ int main()
     {
        int N,K,m,i,j;
        cin>>N>>K;
-       string str;
+       string str,str1;
        cin>>str;
        int count=0, flag=0,f;
-       for(i=0,m=0;m<N;m++)
+        //whenever encounter a sheet add one more sheet
+       for(i=0;i<str.length();i++)
+       {
+           if(str[i]==':') str1+=':';
+           str1+=str[i];
+       }
+      // cout<<str1<<endl;
+       for(i=0,m=0;m<str1.length();m++)
        {
            //whenever get a X pass the subarray before X to the function.. 
-           if(str[m]=='X')
+           if(str1[m]=='X')
            {
                //if attracted return 1 thus increment the count
-               
-               f=calculate(str,i,m-1,K);
+               f=calculate(str1,i,m-1,K);
                count=count+f;
-               i=m+1;
-               
+               i=m+1;  
            }
-           else if(m==N-1)
+           else if(m==str1.length()-1)
            {
-               f=calculate(str,i,m,K);
+               f=calculate(str1,i,m,K);
                count=count+f;
            }
        }
@@ -97,5 +86,4 @@ int main()
        v.clear();
     }
 }
-
 
