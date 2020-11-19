@@ -6,61 +6,61 @@ using namespace std;
 //keep track which iron is already attracted by any magnet
 vector<int> v;
 
-int value(string str,int i,int j,int K)
+int calculate_val(string str,int i,int j,int K)
 {
-    int s=0,m,f;
-    if(i>j)
+    int l,s=0,sum;
+    for(l=i+1;l<j;l++)
     {
-        i^=j;
-        j^=i;
-        i^=j;
+        if(str[l]==':') s=s+1;
     }
-    //between iron and magnet check if X return 0
-    //else count the number of colon between iron and magnet
-    for(m=i;m<j;m++)
-    {
-        if(str[m]=='X') return 0;
-        else if(str[m]==':') s++;
-    }
-
-    //calculate the power if >0 then return 1 else return 0
-    f=K+1-abs(i-j)-s;
-    if(f>0) return 1;
-    else return 0;
-    
+    sum=K+1-abs(i-j)-s;
+    if(sum>0) return 1;
+    else return 0;  
 }
 
 
-int calculate(string str,int i,int K,int N)
+int value(string str,int i,int p,int j,int K)
 {
-    int p,j;
-    if(v.size()==0) v.push_back(-1);
-    for(p=v[v.size()-1]+1;p<N;p++)
+    int x,z,q;
+    for(x=max(i,v[v.size()-1]+1);x<=j;x++)
     {
-        /*if(str[p]=='I')
+        if(str[x]=='I')
         {
-            j=value(str,i,p,K);
-            if(j==1)
+            q=x;
+            if(x>p)
             {
-                v.push_back(p);
-                return 1;
+                x^=p;
+                p^=x;
+                x^=p;
             }
-            
-        }*/
-        if(str[p]=='I')
-        {
-            j=value(str,i,p,K);
-            if(j==1)
+            z=calculate_val(str,x,p,K);
+            if(z==1)
             {
-                v.push_back(p);
+                v.push_back(q);
                 return 1;
             }
         }
     }
-    return 0;
-    
+    return 0;  
+}
 
-    
+
+int calculate(string str,int i,int j,int K)
+{
+    int p,z,count1=0;
+    if(v.size()==0) v.push_back(-1);
+    for(p=i;p<=j;p++)
+    {
+
+        if(str[p]=='M')
+        {
+            z=value(str,i,p,j,K);
+            if(z==1) count1++;
+
+        }
+    }
+    return count1;
+ 
 }
 
 
@@ -75,18 +75,27 @@ int main()
        string str;
        cin>>str;
        int count=0, flag=0,f;
-       for(m=0;m<N;m++)
+       for(i=0,m=0;m<N;m++)
        {
-           //whenever get a magnet find whether it can be attracted or not
-           if(str[m]=='M')
+           //whenever get a X pass the subarray before X to the function.. 
+           if(str[m]=='X')
            {
                //if attracted return 1 thus increment the count
-               f=calculate(str,m,K,N);
-               if(f==1)count++;
+               
+               f=calculate(str,i,m-1,K);
+               count=count+f;
+               i=m+1;
+               
+           }
+           else if(m==N-1)
+           {
+               f=calculate(str,i,m,K);
+               count=count+f;
            }
        }
        cout<<count<<endl;
        v.clear();
     }
 }
+
 
