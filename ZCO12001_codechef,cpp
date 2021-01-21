@@ -1,0 +1,170 @@
+#include<iostream>
+#include<bits/stdc++.h>
+
+//problem:: if i try to print from function nesting_depth and function max_seq_length
+// then for last two value garbage value is printed but when i print the value of two function
+// in different lines it works well.
+
+using namespace std;
+
+
+//push in stack.........................
+
+void push1(int stack[],int *top,int bracket)
+{
+    *top=(*top)+1;
+    stack[*top]=bracket;
+}
+
+// pop in stack...............
+void pop(int stack[],int *top)
+{
+    *top=(*top)-1;
+}
+
+//function printing the nesting depth and the starting position of nesting depth.
+void nesting_depth(int A[],int N)
+{
+    int stack[N];
+    int top=0;
+    stack[0]=0;
+    int count=0,depth=0,position=0,flag=1;
+    for(int i=0;i<N;i++)
+    {
+        //opening bracket comes after closing braces and stack is not empty
+        if(A[i]==1 && flag==0)
+        {
+            count=top+1;
+            push1(stack,&top,A[i]);
+        }
+        //if opening brackets comes after stack becomes empty
+        else if(A[i]==1 )
+        {
+            if(flag==1) count++;
+            push1(stack,&top,A[i]);
+        }
+        //when closing bracket comes then change the depth value and pop the stack.
+        else if(A[i]==2)
+        {
+            if(count>depth) 
+            {
+                depth=count;
+                position=i;
+            }
+             flag=0;
+             count=0;
+            pop(stack,&top);
+        }
+        //when all the opening bracket poped out make flag=1.
+        if(top==0) flag=1;
+    }
+    cout<<depth<<" "<<position<<endl;// try to print in same line then takes garbage value.
+  
+    
+}
+
+// function to return max length and position
+void max_seq_length(int A[],int N)
+{
+    int stack[N];
+    int top=0;
+    stack[top]=0;
+    int count,max=0,position=0;
+    for(int i=0;i<N;i++)
+    {
+        count++;
+        if(A[i]==1) push1(stack,&top,A[i]); //opening bracket then push.
+        
+        else pop(stack,&top); // closing bracket then pop.
+        
+        //when stack becomes empty 
+        if(top==0) 
+        {
+            // if current count is max then update max and starting position.
+            if(count>max)
+            {
+                max=count;
+                position=i-max+2;
+            }
+            count=0;
+        }
+    }
+    cout<<max<<" "<<position<<endl; //try to print in same line then later value becomes garbage.
+   
+}
+
+//function return 1 if pushing element is successful else return 0.
+//this function is used for validiting the string.
+bool push(int stack[],int *top, int bracket)
+{
+    if(bracket==2 && *top ==0) return 0;
+    if(*top < 0)  return 0 ;
+    else if(bracket==1 )
+    {
+        *top=(*top)+1;
+        stack[*top]=1;
+        return 1;
+    }
+    else if(bracket==2)
+    {
+        *top=(*top)-1;
+        return 1;
+    }
+    
+    
+}
+//function to check whether the given bracket string is valid/invalid.
+
+bool valid_string(int A[],int N)
+{
+    int stack[N];
+    int val;
+    stack[0]=0;  //lowermost element of stack i.e z0.
+    int top=0;
+    for(int j=0;j<N;j++)
+    {
+        val=push(stack,&top,A[j]);
+        if(val==0) return 0;
+    }
+    if(top==0)
+    return 1;
+    else return 0;
+}
+
+void Result(int A[],int N)
+{
+    // In case of valid string
+    if(valid_string(A,N))
+    {
+        
+        nesting_depth(A,N); //function calling for nesting depth and position
+        
+        max_seq_length(A,N); // function calling for max sequence length and position.
+    }
+    else
+    {
+        cout<<"Invalid String"<<endl;
+    }
+}
+
+
+
+int main()
+{
+    int N;  //length of bracket string.
+    cin>>N;
+    int A[N];
+    for(int i=0;i<N;i++)
+    {
+        cin>>A[i];
+        
+        if(A[i]!=1 && A[i]!=2) 
+        {
+            cout<<"Invalid input"<<endl;
+            exit(0);
+        }
+    }
+    
+    Result(A,N); //function for getting desired result. 
+
+}
