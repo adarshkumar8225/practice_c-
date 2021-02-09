@@ -20,22 +20,29 @@ int calculate(vector<string> v,string str1,string str2)
     return 2;
 }
 
+bool compare(string a, string b) 
+{
+    if(a<b) return(1);
+    else return 0;
+}
 int team_name(vector<string> v)
 {
     int count=0;
+    
+
     
     for(int i=0;i<v.size()-1;i++)
     {
         for(int j=i+1;j<v.size();j++)
         {
+            string str1=v[i];
+            string str2=v[j];
+            if(str1[0]!=str2[0])
             count=count+calculate(v,v[i],v[j]);
         }
     }
     
-    //for(int i=0;i<v.size();i++)
-   // {
-        
-   // }
+
     return count;
 }
 
@@ -54,6 +61,7 @@ int main() {
 	    {
 	        cin>>str;
 	        v.push_back(str);
+	       // for(auto x:str) if(x!='a' && x!='b') { v.clear() ; break;}
 	    }
 	    cout<<team_name(v)<<endl;
 	}
