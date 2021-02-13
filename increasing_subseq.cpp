@@ -1,32 +1,44 @@
 
 //problem link:  https://practice.geeksforgeeks.org/problems/longest-increasing-subsequence-1587115620/1#
 
+
+
+// Time Complexity : O(NlogN)
+
+// return length of longest strictly increasing subsequence
+
 int longestSubsequence(int n, int a[])
 {
-   // your code here
-   int dp[n],result=1,i=0,j;
-   //initialize the value with 1.
-   for(i=0;i<n;i++)
-   {
-       dp[i]=1;
-   }
-   //for each i go on traversing from 0 to i
-   // and those element which is less than a[i] and its initial value at ith position
-   //is less than value at jth position +1 then update the value. 
-  
-   for(i=1;i<n;i++)
-   {
-       for(j=0;j<i;j++)
-       {
-           if(a[i]>a[j] && dp[i]<dp[j]+1)
-           {
-               dp[i]=dp[j]+1;
-           }
-       }
-
-       result=max(result,dp[i]);
-   }
-   //return max of all.
-   return result;
-  
+    //in this array index gives the length of subsequence
+    // and value gives the last element at that length of subsequence.
+    int dp[n]={0};
+    //length gives the max length of subsequence till now.
+    //flag identifies whether current value is smallest of all the values.
+    int len=1,flag;
+    
+    //loop for index 0 to n.
+    for(int i=0;i<n;i++)
+    {
+        if(i==0) dp[len]=a[i];
+        else
+        {
+            flag=0;
+            //compare last element of subsequences.
+            for(int j=len;j>0;j--)
+            {
+                //last element is less than current value.
+                if(dp[j]<a[i]) 
+                {
+                    j=j+1;
+                    dp[j]= a[i];
+                    if(len<j) len=j; // if length is less than j.
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0) dp[1]=a[i]; // if smallest of all the value.
+            
+        }
+    }
+    return len;
 }
