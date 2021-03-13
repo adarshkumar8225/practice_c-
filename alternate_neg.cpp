@@ -4,38 +4,28 @@
 #include <iostream>
 #include<bits/stdc++.h>
 using namespace std;
+bool desc(int a,int b)
+{
+    return a>b;
+}
+void swap(int *a,int *b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
 
 void fun(int arr[],int n)
 {
-    vector<int> neg;
-    vector<int> pos;
-    
-    for(int i=0;i<n;i++)
+    sort(arr,arr+n,desc);//desc is the function defined above
+    int index;
+    for(int j=n-1;j>=0;j--)
     {
-        if(arr[i]>=0) pos.push_back(arr[i]);
-        else neg.push_back(arr[i]);
+        if(arr[j]>=0) {index=j+1;break;}
     }
-    int j=0,k=0;
-    for(int i=0;i<n;i++)
+    for(int i=0,j=n-1;j>=index;i+=2,j--)
     {
-        if(j==neg.size())
-        {
-            arr[i]=pos[k];
-            k++;
-        }
-        else
-        {
-            if(i%2==0)
-            {
-                arr[i]=neg[j];
-                j++;
-            }
-            else
-            {
-                arr[i]=pos[k];
-                k++;
-            }
-        }
+        swap(arr[i],arr[j]);
     }
 }
 
