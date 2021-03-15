@@ -3,116 +3,48 @@
 //Problem Link-->>> https://practice.geeksforgeeks.org/problems/factorials-of-large-numbers2508/1#
 
 
-#include <iostream>
-#include<bits/stdc++.h>
 
-using namespace std;
-
-
-    vector<int> multiply(vector<int> v1,vector<int> v2)
-    {
-        vector<vector<int> > result;
-        int i=v2.size()-1;
-        int carry,k,val;
-        while(i>=0)
-        {
-            k=0;
-            carry=0;
-            for(int j=v1.size()-1;j>=0;j--)
-            {
-                val=v1[j]*v2[i];
-                val=val+carry;
-                if(val<10){ result[k].push_back(val);carry=0;}
-                else
-                {
-                    
-                    result[k].push_back(val%10);
-                    val=val/10;
-                    carry=val%10;
-                    if(j==0) result[k].push_back(carry);
-                }
-            }
-           
-            reverse(result[k].begin(),result[k].end());
-            int zeroes=k;
-            while(zeroes)
-            {
-                result[k].push_back(0);
-                zeroes--;
-            }
-            i--;
-            k++;
-        }
-        int n=result[k-1].size();
-        for(int m=0;m<k-1;m++)
-        {
-            int x=n-result[m].size();
-            while(x)
-            {
-                result[m].insert(result[m].begin(),0);
-                x--;
-            }
-        }
-        vector<int > output;
-        for(int m=result[0].size()-1;m>=0;m--)
-        {
-            carry=0;
-            val=0;
-            for(int p=0;p<result.size();p++)
-            {
-                 val=result[p][m]+val;
-            }
-            val=val+carry;
-            if(val<10) output.push_back(val);
-            else
-            {
-                output.push_back(val%10);
-                val=val/10;
-                carry=val%10;
-                if(m==0) output.push_back(carry);
-            }
-        }
-        reverse(output.begin(),output.end());
-        return output;
-    }
-    vector<int> digit_store(int n)
-    {
-        vector<int> v;
-        while(n)
-        {
-            v.push_back(n%10);
-            n=n/10;
-        }
-        reverse(v.begin(),v.end());
-        return v;
-    }
-    
-    vector<int> factorial(int N)
-    {
-        // code here
-        vector<int> v,v1,result;
-        v=digit_store(N);
-        //digit_store(v1,N-1);
-        while(N>1)
-        {
-            v1=digit_store(N-1);
-            result=multiply(v,v1);
-            v.clear();
-            v=result;
-            v1.clear();
-            N--;
-        }
-        return result;
-    }
-
-
-
-
-int main()
+vector<int> multiply(int x, vector<int> res)
 {
-    int N;
-    cin>>N;
-    vector<int> V=factorial(N);
-    for(int i=0;i<V.size();i++) cout<<V[i];
-    return 0;
+    int carry = 0;  // Initialize carry
+ 
+    // One by one multiply n with individual digits of res[]
+    for (int i=0; i<res.size(); i++)
+    {
+        int prod = res[i] * x + carry;
+ 
+        // Store last digit of 'prod' in res[]  
+        res[i] = prod % 10;  
+ 
+        // Put rest in carry
+        carry  = prod/10;    
+    }
+ 
+    // Put carry in res and increase result size
+    while (carry)
+    {
+        res.push_back(carry%10);
+        carry = carry/10;
+        
+    }
+    return res;
 }
+ 
+// This function finds factorial of large numbers
+// and prints them
+vector<int> factorial(int n)
+{
+    vector<int> res;
+ 
+    // Initialize result
+    res.push_back(1);
+   
+ 
+    // Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
+    for (int x=2; x<=n; x++)
+        res=multiply(x, res);
+ 
+    reverse(res.begin(),res.end());
+    return res;
+}
+
