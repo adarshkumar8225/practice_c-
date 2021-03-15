@@ -112,7 +112,7 @@ int main()
 {
     int N;
     cin>>N;
-    vector<int> v=factorial(N);
-    for(int i=0;i<v.size();i++) cout<<v[i];
+    vector<int> V=factorial(N);
+    for(int i=0;i<V.size();i++) cout<<V[i];
     return 0;
 }
