@@ -1,7 +1,8 @@
 
 //Problem Statement-->>> https://practice.geeksforgeeks.org/problems/path-in-matrix3805/1#
 // Find maximum sum path in the matrix starting from any column of row 0.
-int max_m(int a,int b,int c)
+
+    int max_m(int a,int b,int c)
     {
          int max;
  
@@ -23,23 +24,23 @@ int max_m(int a,int b,int c)
             }
         }
         int max1=1;
-        for(int i=1;i<N;i++)
+        for(int i=N-2;i>=0;i--)
         {
             for(int j=0;j<N;j++)
             {
                 if(j==0)
                 {
-                    dp[i][j]=max(dp[i][j]+dp[i-1][j],dp[i][j]+dp[i-1][j+1]);
+                    dp[i][j]=max(dp[i][j]+dp[i+1][j],dp[i][j]+dp[i+1][j+1]);
                     if(dp[i][j]>max1) max1=dp[i][j];
                 }
                 else if(j==N-1)
                 {
-                    dp[i][j]=max(dp[i][j]+dp[i-1][j],dp[i][j]+dp[i-1][j-1]);
+                    dp[i][j]=max(dp[i][j]+dp[i+1][j],dp[i][j]+dp[i+1][j-1]);
                     if(dp[i][j]>max1) max1=dp[i][j];
                 }
                 else
                 {
-                   dp[i][j]=max_m(dp[i][j]+dp[i-1][j],dp[i][j]+dp[i-1][j-1],dp[i][j]+dp[i-1][j+1]);
+                   dp[i][j]=max_m(dp[i][j]+dp[i+1][j],dp[i][j]+dp[i+1][j-1],dp[i][j]+dp[i+1][j+1]);
                     if(dp[i][j]>max1) max1=dp[i][j];
                 }
             }
