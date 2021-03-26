@@ -15,7 +15,7 @@
     {
         // code here
         int dp[N][N];
-        //Initialize the 2-D array with 1.
+        //Initialize the 2-D array with respective element of matrix.
         for(int i=0;i<N;i++)
         {
             for(int j=0;j<N;j++)
