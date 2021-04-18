@@ -7,22 +7,40 @@
 
 using namespace std;
 
-int subset_count(int arr[],int sum,int i, int n)
+
+int subset_count(int arr[],int sum,int n)
 {
-    static int count;
-    //when reach at the end of list now check if sum==0 then count++
-    //Otherwise count is not updated................................
-    if(i==n) 
-    {
-        if(sum==0) count++;
-        return count;
-    }
-    //Recursive call for generating all subset_count
-    //For each element we have two option either it is included in the subset
-    //or it is not included in the subset
-    subset_count(arr,sum,i+1,n);
-    subset_count(arr,sum-arr[i],i+1,n);
+    int dp[n+1][sum+1];
     
+    for(int i=0;i<=n;i++)
+    {
+        for(int j=0;j<=sum;j++)
+        {
+            //Initialize the table
+            if(i==0)
+            {
+                if(j==0) dp[i][j]=1;
+                else dp[i][j]=0;
+            }
+            else if(j==0) dp[i][j]=1;
+            else
+            {
+                //if current element is less than required sum "j"
+                //then add the value obtained with including current element
+                //and without including current element.......................
+                if(arr[i-1]<=j)
+                {
+                    dp[i][j]=dp[i-1][j]+dp[i-1][j-arr[i-1]];
+                }
+                //if current element is greater than j then it cant give sum=j
+                else
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+    }
+    return dp[n][sum];
 }
 
 int main()
@@ -33,6 +51,6 @@ int main()
     for(int i=0;i<n;i++) cin>>arr[i];
     int sum;
     cin>>sum;
-    cout<<subset_count(arr,sum,0,n);
+    cout<<subset_count(arr,sum,n);
     
 }
