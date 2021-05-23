@@ -21,10 +21,15 @@ using namespace std;
 //function returns the count of difference of sum of two partitions equal to X.
 int min_subset_diff(int A[],int N,int sum,int X)
 {
-    int dp[N+1][sum/2+1];
+    // Value of sum1 is calculated which is sum of smaller partitions
+    //sum1-sum2= X  ----(1)
+    //sum1+sum2= sum ----(2)
+    //add (1)+(2) we get sum1=(sum+X)/2;
+    int sum1=(sum+X)/2;
+    int dp[N+1][sum1+1];
     for(int i=0;i<=N;i++)
     {
-        for(int j=0;j<=sum/2;j++)
+        for(int j=0;j<=sum1;j++)
         {
             //Initialization of first row and first column 
             if(i==0)
@@ -46,16 +51,8 @@ int min_subset_diff(int A[],int N,int sum,int X)
         }
     }
     //count the subset whose difference is X
-    int count=0;
-    for(int j=sum/2;j>=0;j--)
-    {
-        if(dp[N][j]) 
-        {
-            //Here j= sum1 and sum2-sum1=sum-2*j ,, here sum= sum of all elements.
-            if(sum-2*j== X) count=count+dp[N][j];
-        }
-    }
-    return count;
+
+    return dp[N][sum1];
     
 }
 
