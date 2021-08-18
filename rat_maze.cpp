@@ -1,41 +1,52 @@
-vector<vector<int>> visited(5, vector<int> (5,0));
-vector<string> result;
-
-class Solution{
-    public:
-    void path(vector<vector<int>> &m, int x, int y, string dir, int n) {
-        if (x == n - 1 and y == n - 1) {
-            result.push_back(dir);
+    void path(vector<vector<int>> &m,int x,int y,int n,vector<string> &v,string str,
+    vector<vector<int>> &visited)
+    {
+        if(x==n-1 && y==n-1 )
+        {
+            v.push_back(str);
             return;
         }
-    
-        if (m[x][y] == 0 or visited[x][y] == 1) return;
-    
-        //Mark current node as visited.
-        visited[x][y] = 1;
         
-        //Recursive call for all the four direction
-        if (x > 0) path(m, x - 1, y, dir + 'U', n);
-        if (y > 0) path(m, x, y - 1, dir + 'L', n);
-        if (x < n - 1) path(m, x + 1, y, dir + 'D', n);
-        if (y < n - 1) path(m, x, y + 1, dir + 'R', n);
-        //Once the function call is completed then again mark this node as nu-visited. 
-        visited[x][y] = 0;
+        visited[x][y]=1;
+        
+        if(x>0 && visited[x-1][y]==0 && m[x-1][y]==1)
+        {
+            path(m,x-1,y,n,v,str+'U',visited);
+        }
+        if(y>0 && visited[x][y-1]==0 && m[x][y-1]==1)
+        {
+            path(m,x,y-1,n,v,str+'L',visited);
+        }
+        
+        if(x<n-1 && visited[x+1][y]==0 && m[x+1][y]==1)
+        {
+            path(m,x+1,y,n,v,str+'D',visited);
+        }
+        
+        if(y<n-1 && visited[x][y+1]==0 && m[x][y+1]==1)
+        {
+            path(m,x,y+1,n,v,str+'R',visited);
+        }
+        
+        visited[x][y]=0;
+        
     }
+    
     
     vector<string> findPath(vector<vector<int>> &m, int n) {
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                visited[i][j] = false;
-            }
+        // Your code goes here
+        
+        vector<string> v;
+        vector<vector<int>> visited(n,vector<int> (n,0));
+        int x=0,y=0;
+        if(m[0][0]==0 || m[n-1][n-1]==0)
+        {
+            string s="-1";
+            v.push_back(s);
+            return v;
         }
-        result.clear();
-    
-        if (m[0][0] == 0 || m[n - 1][n - 1] == 0) return result;
-    
-        path(m, 0, 0, "", n);
-        // Sorted the result to get the output in sorted order
-        sort(result.begin(), result.end());
-        return result;
+        path(m,x,y,n,v,"",visited);
+        
+        sort(v.begin(),v.end());
+        return v;
     }
-};
