@@ -1,4 +1,6 @@
-    vector<int> nextPermutation(int N, vector<int> arr){
+//Problem LInk-> https://practice.geeksforgeeks.org/problems/next-permutation5226/1#    
+
+vector<int> nextPermutation(int N, vector<int> arr){
         // code here
         int i;
         for(i=N-2;i>=0;i--)
